@@ -1,5 +1,6 @@
 "use client";
-
+import { useRef } from "react";
+import gsap from "gsap";
 import { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 
@@ -14,6 +15,7 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,9 +30,8 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`${styles.navbar} ${
-          scrolled ? styles.scrolled : ""
-        }`}
+        className={`${styles.navbar} ${scrolled ? styles.scrolled : ""
+          }`}
       >
         <div className={styles.logo}>
           <img src="/images/logo.jpg" alt="Logo" />
@@ -46,16 +47,37 @@ export default function Navbar() {
 
         <button
           className={styles.burger}
-          onClick={() => setMenuOpen(true)}
+          onClick={() => {
+            setMenuOpen(true);
+
+            setTimeout(() => {
+              if (!mobileMenuRef.current) return;
+
+              gsap.fromTo(
+                mobileMenuRef.current.querySelectorAll("a, h2, img, span, small"),
+                {
+                  opacity: 0,
+                  x: 40,
+                },
+                {
+                  opacity: 1,
+                  x: 0,
+                  stagger: 0.08,
+                  duration: 0.5,
+                  ease: "power3.out",
+                }
+              );
+            }, 50);
+          }}
         >
           ☰
         </button>
       </header>
 
       <div
-        className={`${styles.mobileMenu} ${
-          menuOpen ? styles.mobileOpen : ""
-        }`}
+        ref={mobileMenuRef}
+        className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""
+          }`}
       >
         <button
           className={styles.close}
@@ -64,7 +86,27 @@ export default function Navbar() {
           ✕
         </button>
 
+        <img
+          src="/images/logo.jpg"
+          alt="Logo"
+          className={styles.mobileLogo}
+        />
+
         <h2>L'ARTISTE VISUEL</h2>
+
+        <nav className={styles.mobileLinks}>
+          {links.map((link) => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className={styles.separator}></div>
 
         <a
           href="https://snapchat.com/t/2p1BEiQs"
@@ -94,13 +136,9 @@ export default function Navbar() {
           📧 Contact
         </a>
 
-        <span>
-          Disponible pour vos projets
-        </span>
+        <span>Disponible pour vos projets</span>
 
-        <small>
-          Réponse sous 24h
-        </small>
+        <small>Réponse sous 24h</small>
       </div>
     </>
   );

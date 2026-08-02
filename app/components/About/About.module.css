@@ -1,51 +1,90 @@
-.about{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:0 10%;
+.about {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 10%;
 }
 
-.about span{
-    color:#D4AF37;
-    letter-spacing:8px;
-    font-size:14px;
-    font-weight:700;
-    margin-bottom:30px;
+.about span {
+    color: #D4AF37;
+    letter-spacing: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 30px;
 }
 
-.about h2{
-    font-size:clamp(52px,7vw,96px);
-    line-height:1;
-    max-width:1100px;
-    margin-bottom:40px;
-    font-weight:900;
-    color:white;
+.about h2 {
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 1;
+    max-width: 1100px;
+    margin-bottom: 40px;
+    font-weight: 900;
+    color: white;
 }
 
-.about p{
-    max-width:900px;
-    font-size:24px;
-    line-height:1.8;
-    color:#d6d6d6;
-}
-.scroll{
-    margin-top:80px;
-    font-size:40px;
-    color:#D4AF37;
-    animation:bounce 2s infinite;
+.about p {
+    max-width: 900px;
+    font-size: 24px;
+    line-height: 1.8;
+    color: #d6d6d6;
 }
 
-@keyframes bounce{
-
-0%,100%{
-transform:translateY(0);
+.scroll {
+    margin-top: 80px;
+    font-size: 40px;
+    color: #D4AF37;
+    animation: bounce 2s infinite;
 }
 
-50%{
-transform:translateY(12px);
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(12px);
+    }
+
 }
+
+/* ========================= */
+/* ABOUT MOBILE */
+/* ========================= */
+
+@media (max-width:768px) {
+
+    .about {
+        min-height: 100svh;
+        padding: 90px 24px;
+    }
+
+    .about span {
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin-bottom: 18px;
+    }
+
+    .about h2 {
+        font-size: clamp(36px, 11vw, 58px);
+        line-height: 1.05;
+        margin-bottom: 28px;
+        max-width: 340px;
+    }
+
+    .about p {
+        max-width: 330px;
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .scroll {
+        margin-top: 50px;
+        font-size: 34px;
+    }
 
 }
