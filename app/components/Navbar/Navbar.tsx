@@ -1,8 +1,16 @@
 "use client";
-import { useRef } from "react";
+
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
-import { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
+
+import {
+  Menu,
+  Send,
+  Mail,
+  Circle,
+  Globe,
+} from "lucide-react";
 
 const links = [
   { id: "hero", label: "Accueil" },
@@ -15,6 +23,7 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,7 +63,9 @@ export default function Navbar() {
               if (!mobileMenuRef.current) return;
 
               gsap.fromTo(
-                mobileMenuRef.current.querySelectorAll("a, h2, img, span, small"),
+                mobileMenuRef.current.querySelectorAll(
+                  "img,h2,p,nav,a,span,small,div"
+                ),
                 {
                   opacity: 0,
                   x: 40,
@@ -70,7 +81,7 @@ export default function Navbar() {
             }, 50);
           }}
         >
-          ☰
+          <Menu size={34} />
         </button>
       </header>
 
@@ -86,13 +97,23 @@ export default function Navbar() {
           ✕
         </button>
 
-        <img
-          src="/images/logo.jpg"
-          alt="Logo"
-          className={styles.mobileLogo}
-        />
+        <div className={styles.logoBox}>
+          <img
+            src="/images/logo.jpg"
+            alt="Logo"
+            className={styles.mobileLogo}
+          />
+        </div>
 
         <h2>L'ARTISTE VISUEL</h2>
+
+        <p className={styles.tagline}>
+          Designer graphique
+        </p>
+
+        <p className={styles.tagline2}>
+          Identité visuelle • Sites web
+        </p>
 
         <nav className={styles.mobileLinks}>
           {links.map((link) => (
@@ -108,37 +129,55 @@ export default function Navbar() {
 
         <div className={styles.separator}></div>
 
-        <a
-          href="https://snapchat.com/t/2p1BEiQs"
-          target="_blank"
-          rel="noreferrer"
-        >
-          👻 Snapchat
-        </a>
+        <div className={styles.socials}>
+          <a
+            href="https://snapchat.com/t/2p1BEiQs"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
+            <Circle size={18} />
+            Snapchat
+          </a>
 
-        <a
-          href="https://www.facebook.com/share/18GrdCqoGQ/?mibextid=wwXIfr"
-          target="_blank"
-          rel="noreferrer"
-        >
-          📘 Facebook
-        </a>
+          <a
+            href="https://www.facebook.com/share/18GrdCqoGQ/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
+            < Globe size={18} />
+            Facebook
+          </a>
 
-        <a
-          href="https://t.me/+RCV3meXWthVkNWU8"
-          target="_blank"
-          rel="noreferrer"
-        >
-          ✈️ Telegram
-        </a>
+          <a
+            href="https://t.me/+RCV3meXWthVkNWU8"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
+            <Send size={18} />
+            Telegram
+          </a>
 
-        <a href="mailto:lartistevisuel@gmail.com">
-          📧 Contact
-        </a>
+          <a
+            href="mailto:lartistevisuel@gmail.com"
+            onClick={() => setMenuOpen(false)}
+          >
+            <Mail size={18} />
+            Email
+          </a>
+        </div>
 
-        <span>Disponible pour vos projets</span>
+        <div className={styles.footer}>
+          <span>Disponible pour vos projets</span>
 
-        <small>Réponse sous 24h</small>
+          <small>Réponse sous 24 h</small>
+
+          <div className={styles.separator}></div>
+
+          <p>© 2026 L'ARTISTE VISUEL</p>
+        </div>
       </div>
     </>
   );
