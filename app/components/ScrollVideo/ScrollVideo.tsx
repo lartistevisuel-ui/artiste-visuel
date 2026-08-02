@@ -16,7 +16,7 @@ export default function ScrollVideo() {
     // Préchargement des images
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `/frames/frame_${String(i).padStart(4, "0")}.png`;
+      img.src = `/frames/frame_${String(i).padStart(4, "0")}.webp`;
     }
 
     ScrollTrigger.create({
@@ -37,7 +37,7 @@ export default function ScrollVideo() {
         );
 
         imgRef.current.src =
-          `/frames/frame_${String(frame).padStart(4, "0")}.png`;
+          `/frames/frame_${String(frame).padStart(4, "0")}.webp`;
       },
     });
 
@@ -51,7 +51,7 @@ export default function ScrollVideo() {
       <img
         ref={imgRef}
         className={styles.video}
-        src="/frames/frame_0001.png"
+        src="/frames/frame_0001.webp"
         alt=""
         draggable={false}
       />
