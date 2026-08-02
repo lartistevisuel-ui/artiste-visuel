@@ -16,7 +16,7 @@
 
     align-items: center;
 
-    padding: 0 70px;
+    padding: 0 5px;
 
     z-index: 999;
 
@@ -155,7 +155,7 @@
     background: none;
     border: none;
 
-    color: white;
+    color: rgb(216, 14, 14);
 
     font-size: 40px;
 
