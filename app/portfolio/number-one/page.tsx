@@ -7,7 +7,7 @@ import styles from "./LaEsquina.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function LaEsquinaPage() {
+export default function numberonePage() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const galleryRef = useRef<HTMLDivElement>(null);
@@ -70,7 +70,7 @@ export default function LaEsquinaPage() {
                     <div className={styles.heroContent}>
 
                         <h1 className={styles.title}>
-                            LA ESQUINA
+                           NUMBER ONE 
                         </h1>
 
                         <p className={styles.subtitle}>
@@ -114,7 +114,7 @@ export default function LaEsquinaPage() {
                 </h2>
 
                 <p className={styles.text}>
-                    La Esquina est un projet de branding imaginé pour un restaurant
+                    number one  est un projet de branding imaginé pour un restaurant
                     moderne. L'objectif était de créer une identité forte, premium
                     et facilement reconnaissable à travers le logo, les menus,
                     le packaging et les supports de communication.

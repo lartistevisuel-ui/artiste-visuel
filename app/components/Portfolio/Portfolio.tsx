@@ -14,9 +14,9 @@ const projects = [
         link: "/portfolio/my-food",
     },
     {
-        title: "La Esquina",
+        title: "Number one",
         image: "/portfolio/projet2.webp",
-        link: "/portfolio/la-esquina",
+        link: "/portfolio/number-one",
     },
     {
         title: "Luxury Logo",
