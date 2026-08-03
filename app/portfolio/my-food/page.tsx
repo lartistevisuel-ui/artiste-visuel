@@ -243,9 +243,6 @@ export default function MyFoodPage() {
                         ← Retour au Portfolio
                     </a>
 
-                    <a href="http://localhost:3000/portfolio/la-esquina">
-                        Projet suivant →
-                    </a>
 
                 </div>
 
