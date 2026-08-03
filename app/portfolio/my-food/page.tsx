@@ -239,7 +239,7 @@ export default function MyFoodPage() {
 
                 <div className={styles.bottom}>
 
-                    <a href="http://localhost:3000/#portfolio">
+                    <a href="/#portfolio">
                         ← Retour au Portfolio
                     </a>
 
