@@ -181,11 +181,10 @@ export default function MyFoodPage() {
                 >
 
                     {[
-                        "/images/my-food/image1.PNG",
-                        "/images/my-food/image2.PNG",
-                        "/images/my-food/image3.PNG",
-                        "/images/my-food/image4.PNG",
-                        "/images/my-food/image6.PNG",
+                        "/images/my-food/image1.jpg",
+                        "/images/my-food/image2.jpg",
+                        "/images/my-food/image3.jpg",
+                        "/images/my-food/image4.jpg",
                     ].map((image) => (
 
                         <img
@@ -240,11 +239,13 @@ export default function MyFoodPage() {
 
                 <div className={styles.bottom}>
 
-                    <a href="https://artiste-visuel.vercel.app/#portfolio">
+                    <a href="http://localhost:3000/#portfolio">
                         ← Retour au Portfolio
                     </a>
 
-
+                    <a href="http://localhost:3000/portfolio/la-esquina">
+                        Projet suivant →
+                    </a>
 
                 </div>
 
