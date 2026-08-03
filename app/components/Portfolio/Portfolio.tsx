@@ -9,20 +9,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
     {
-        title: "Projet 01",
+        title: "My Food",
         image: "/portfolio/projet1.webp",
+        link: "/portfolio/my-food",
     },
     {
-        title: "Projet 02",
+        title: "La Esquina",
         image: "/portfolio/projet2.webp",
+        link: "/portfolio/la-esquina",
     },
     {
-        title: "Projet 03",
+        title: "Luxury Logo",
         image: "/portfolio/projet3.webp",
+        link: "/portfolio/luxury-logo",
     },
     {
-        title: "Projet 04",
+        title: "Menu Premium",
         image: "/portfolio/projet4.webp",
+        link: "/portfolio/menu-premium",
     },
 ];
 
@@ -59,9 +63,10 @@ export default function Portfolio() {
 
             <div className={styles.grid}>
                 {projects.map((project, index) => (
-                    <div
+                    <a
                         key={index}
                         className={styles.card}
+                        href={project.link}
                         onMouseMove={(e) => {
                             const card = e.currentTarget;
 
@@ -89,8 +94,13 @@ export default function Portfolio() {
 
                         <div className={styles.overlay}>
                             <h3>{project.title}</h3>
+
+                            <div className={styles.viewProject}>
+                                <span>Voir le projet</span>
+                                <span>→</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 ))}
             </div>
         </section>
