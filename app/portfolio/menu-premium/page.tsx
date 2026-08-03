@@ -251,12 +251,8 @@ export default function menuPremiumPage() {
 
         <div className={styles.bottom}>
 
-          <a href="/#portfolio">
+          <a href="https://artiste-visuel.vercel.app/#portfolio">
             ← Retour au Portfolio
-          </a>
-
-          <a href="/portfolio/site-web">
-            Projet suivant →
           </a>
 
         </div>

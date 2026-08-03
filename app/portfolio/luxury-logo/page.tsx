@@ -251,13 +251,11 @@ export default function LuxuryLogoPage() {
 
                 <div className={styles.bottom}>
 
-                    <a href="/#portfolio">
+                    <a href="https://artiste-visuel.vercel.app/#portfolio">
                         ← Retour au Portfolio
                     </a>
 
-                    <a href="/portfolio/menu-premium">
-                        Projet suivant →
-                    </a>
+                    
 
                 </div>
 

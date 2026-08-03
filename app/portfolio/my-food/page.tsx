@@ -239,13 +239,11 @@ export default function MyFoodPage() {
 
                 <div className={styles.bottom}>
 
-                    <a href="http://localhost:3000/#portfolio">
+                    <a href="https://artiste-visuel.vercel.app/#portfolio">
                         ← Retour au Portfolio
                     </a>
 
-                    <a href="http://localhost:3000/portfolio/la-esquina">
-                        Projet suivant →
-                    </a>
+                
 
                 </div>
 
