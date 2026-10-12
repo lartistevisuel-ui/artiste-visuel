@@ -1,144 +1,150 @@
-.portfolio {
-    min-height: 100vh;
-    padding: 120px 8%;
+.head {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: clamp(40px, 6vw, 80px);
 }
 
-.subtitle {
-    color: #D4AF37;
-    letter-spacing: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.portfolio h2 {
-    text-align: center;
-    font-size: clamp(48px, 6vw, 90px);
-    margin-bottom: 80px;
-    color: white;
+.head p {
+    max-width: 36ch;
+    padding-bottom: 10px;
 }
 
 .grid {
-
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(18px, 2.4vw, 32px);
+}
 
-    grid-template-columns: repeat(2, 1fr);
+/* --p : position de la carte dans l'écran, --tx/--ty : inclinaison à la souris */
 
-    gap: 30px;
-
+.scene {
+    height: 100%;
+    perspective: 1200px;
 }
 
 .card {
-
     position: relative;
-
-    overflow: hidden;
-
-    border-radius: 24px;
-
-    cursor: pointer;
-
-    height: 420px;
-
-    background: #11111100;
-    transition: transform .25s ease;
-    transform-style: preserve-3d;
-    will-change: transform;
-
-}
-
-.card img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-
-    transition: transform .6s ease;
-    transition: transform .4s ease;
-
-}
-
-.card:hover img {
-
-    transform: scale(1.12);
-
-    filter: brightness(.85);
-
-}
-
-.overlay {
-
-    position: absolute;
-
-    inset: 0;
-
     display: flex;
-
-    justify-content: flex-end;
-
     flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transform:
+        rotateX(calc((.5 - var(--p, .5)) * 18deg + var(--ty, 0) * -6deg))
+        rotateY(calc(var(--tx, 0) * 7deg));
+    transition:
+        border-color .4s,
+        transform .25s ease-out,
+        box-shadow .5s;
+    will-change: transform;
+}
 
-    padding: 35px;
+.card:hover {
+    border-color: rgba(255, 45, 45, .6);
+    box-shadow: 0 30px 80px -30px rgba(255, 45, 45, .5);
+}
 
-    background: linear-gradient(transparent,
-            rgba(0, 0, 0, .85));
+.card:active {
+    scale: .98;
+}
 
+.glare {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(460px circle at calc(var(--mx, .5) * 100%) calc(var(--my, .5) * 100%),
+            rgba(255, 255, 255, .16),
+            transparent 60%);
     opacity: 0;
-
-    transition: .35s;
-
+    pointer-events: none;
+    transition: opacity .4s;
 }
 
-.card:hover .overlay {
-
+.scene[data-hover] .glare {
     opacity: 1;
-
 }
 
-.overlay h3 {
+.media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 40%, rgba(255, 255, 255, .13), transparent 62%),
+        var(--surface-2);
+}
 
-    color: white;
+.media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.14) translateY(calc((var(--p, .5) - .5) * -9%));
+    transition:
+        transform .25s ease-out,
+        scale .8s var(--ease);
+}
 
-    font-size: 32px;
+.card:hover .media img {
+    scale: 1.08;
+}
 
+.info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 22px clamp(18px, 2vw, 28px);
+    border-top: 1px solid var(--line);
+}
+
+.number {
+    font-size: 13px;
     font-weight: 800;
-    transform: translateY(20px);
-
-    transition: .35s;
+    letter-spacing: .1em;
+    color: var(--red);
 }
 
-.overlay p {
-
-    margin-top: 12px;
-
-    color: #D4AF37;
-
-    font-size: 16px;
-
-    font-weight: 600;
-
-    letter-spacing: 1px;
-
-    opacity: 0;
-
-    transform: translateY(20px);
-
-    transition: .35s;
-
+.text {
+    flex: 1;
+    min-width: 0;
 }
 
-.card:hover .overlay p {
+.text h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(26px, 2.6vw, 36px);
+    line-height: 1.1;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
 
-    opacity: 1;
+.text p {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--muted);
+}
 
-    transform: translateY(0);
+.arrow {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    transition:
+        background-color .35s,
+        border-color .35s,
+        transform .45s var(--ease);
+}
 
+.card:hover .arrow {
+    background: var(--red-deep);
+    border-color: var(--red-deep);
+    transform: rotate(45deg);
 }
 
 /* ========================= */
@@ -147,93 +153,23 @@
 
 @media (max-width:768px) {
 
-    .portfolio {
-        min-height: auto;
-        padding: 90px 24px;
+    .head {
+        flex-direction: column;
+        align-items: start;
+        gap: 18px;
     }
 
-    .subtitle {
-        font-size: 12px;
-        letter-spacing: 3px;
-    }
-
-    .portfolio h2 {
-        font-size: clamp(34px, 10vw, 52px);
-        margin-bottom: 45px;
+    .head p {
+        padding-bottom: 0;
     }
 
     .grid {
         grid-template-columns: 1fr;
-        gap: 22px;
     }
 
-    .card {
-        height: 260px;
-        border-radius: 18px;
+    .arrow {
+        width: 44px;
+        height: 44px;
     }
-
-    .card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .overlay {
-        opacity: 1;
-        padding: 20px;
-        background: linear-gradient(transparent,
-                rgba(0, 0, 0, .82));
-    }
-
-    .overlay h3 {
-        font-size: 22px;
-    }
-
-}
-
-.overlay p {
-    margin-top: 12px;
-    color: #D4AF37;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.card:hover .overlay h3 {
-
-    transform: translateY(0);
-
-}
-
-.viewProject {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    margin-top: 18px;
-
-    padding: 12px 20px;
-
-    border: 1px solid rgba(212, 175, 55, .35);
-
-    border-radius: 999px;
-
-    color: #D4AF37;
-
-    font-weight: 600;
-
-    transition: .35s;
-
-}
-
-.card:hover .viewProject {
-
-    background: #D4AF37;
-
-    color: #000;
-
-    transform: translateX(8px);
 
 }

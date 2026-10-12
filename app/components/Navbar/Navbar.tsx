@@ -1,182 +1,192 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import gsap from "gsap";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight, Ghost, Globe, Mail, Menu, Send, X } from "lucide-react";
+import logo from "@/public/images/logo-transparent.webp";
+import { navLinks, site, socials } from "../../lib/site";
+import Magnetic from "../motion/Magnetic";
 import styles from "./Navbar.module.css";
 
-import {
-  Menu,
-  Send,
-  Mail,
-  Circle,
-  Globe,
-} from "lucide-react";
-
-const links = [
-  { id: "hero", label: "Accueil" },
-  { id: "about", label: "À propos" },
-  { id: "portfolio", label: "Portfolio" },
-  { id: "services", label: "Services" },
-  { id: "contact", label: "Contact" },
-];
+const socialIcons: Record<string, React.ReactNode> = {
+  Snapchat: <Ghost size={18} />,
+  Facebook: <Globe size={18} />,
+  Telegram: <Send size={18} />,
+};
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [visibleSection, setVisibleSection] = useState("");
 
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const active =
+    pathname === "/"
+      ? visibleSection
+      : pathname.startsWith("/portfolio")
+        ? "portfolio"
+        : "";
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 40);
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lien actif selon la section visible (page d'accueil uniquement)
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const sections = navLinks
+      .map((link) => document.getElementById(link.id))
+      .filter((section): section is HTMLElement => section !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setVisibleSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  // Menu mobile : blocage du défilement + fermeture avec Échap
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
+  const close = () => setMenuOpen(false);
+
   return (
     <>
-      <header
-        className={`${styles.navbar} ${scrolled ? styles.scrolled : ""
-          }`}
-      >
-        <div className={styles.logo}>
-          <img src="/images/logo.jpg" alt="Logo" />
+      <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+        <div className={`container ${styles.inner}`}>
+          <Link href="/" className={styles.brand} onClick={close}>
+            <Image
+              src={logo}
+              alt=""
+              width={52}
+              height={52}
+              className={styles.logo}
+            />
+            <span>
+              L&apos;Artiste <em>Visuel</em>
+            </span>
+          </Link>
+
+          <nav className={styles.menu} aria-label="Navigation principale">
+            {navLinks.map((link) => (
+              <Link
+                key={link.id}
+                href={`/#${link.id}`}
+                className={active === link.id ? styles.active : ""}
+                aria-current={active === link.id ? "true" : undefined}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className={styles.cta}>
+            <Magnetic>
+              <Link href="/#contact" className="btn btn--primary btn--small">
+                Démarrer un projet
+                <ArrowUpRight size={16} />
+              </Link>
+            </Magnetic>
+          </div>
+
+          <button
+            type="button"
+            className={styles.burger}
+            aria-label="Ouvrir le menu"
+            aria-expanded={menuOpen}
+            aria-controls="menu-mobile"
+            onClick={() => setMenuOpen(true)}
+          >
+            <Menu size={26} />
+          </button>
         </div>
-
-        <nav className={styles.menu}>
-          {links.map((link) => (
-            <a key={link.id} href={`#${link.id}`}>
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <button
-          className={styles.burger}
-          onClick={() => {
-            setMenuOpen(true);
-
-            setTimeout(() => {
-              if (!mobileMenuRef.current) return;
-
-              gsap.fromTo(
-                mobileMenuRef.current.querySelectorAll(
-                  "img,h2,p,nav,a,span,small,div"
-                ),
-                {
-                  opacity: 0,
-                  x: 40,
-                },
-                {
-                  opacity: 1,
-                  x: 0,
-                  stagger: 0.08,
-                  duration: 0.5,
-                  ease: "power3.out",
-                }
-              );
-            }, 50);
-          }}
-        >
-          <Menu size={34} />
-        </button>
       </header>
 
       <div
-        ref={mobileMenuRef}
-        className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""
-          }`}
+        id="menu-mobile"
+        className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        inert={!menuOpen}
       >
         <button
+          type="button"
           className={styles.close}
-          onClick={() => setMenuOpen(false)}
+          aria-label="Fermer le menu"
+          onClick={close}
         >
-          ✕
+          <X size={24} />
         </button>
 
-        <div className={styles.logoBox}>
-          <img
-            src="/images/logo.jpg"
-            alt="Logo"
-            className={styles.mobileLogo}
-          />
-        </div>
-
-        <h2>L'ARTISTE VISUEL</h2>
-
-        <p className={styles.tagline}>
-          Designer graphique
-        </p>
-
-        <p className={styles.tagline2}>
-          Identité visuelle • Sites web
-        </p>
-
-        <nav className={styles.mobileLinks}>
-          {links.map((link) => (
-            <a
+        <nav className={styles.mobileLinks} aria-label="Navigation mobile">
+          {navLinks.map((link, index) => (
+            <Link
               key={link.id}
-              href={`#${link.id}`}
-              onClick={() => setMenuOpen(false)}
+              href={`/#${link.id}`}
+              onClick={close}
+              style={{ transitionDelay: `${80 + index * 60}ms` }}
             >
+              <small>0{index + 1}</small>
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <div className={styles.separator}></div>
+        <div className={styles.mobileFooter}>
+          <Link href="/#contact" className="btn btn--primary" onClick={close}>
+            Démarrer un projet
+            <ArrowUpRight size={18} />
+          </Link>
 
-        <div className={styles.socials}>
-          <a
-            href="https://snapchat.com/t/2p1BEiQs"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setMenuOpen(false)}
-          >
-            <Circle size={18} />
-            Snapchat
-          </a>
+          <div className={styles.socials}>
+            {socials.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.label}
+              >
+                {socialIcons[social.label]}
+              </a>
+            ))}
 
-          <a
-            href="https://www.facebook.com/share/18GrdCqoGQ/?mibextid=wwXIfr"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setMenuOpen(false)}
-          >
-            < Globe size={18} />
-            Facebook
-          </a>
+            <a href={`mailto:${site.email}`} aria-label="Email">
+              <Mail size={18} />
+            </a>
+          </div>
 
-          <a
-            href="https://t.me/+RCV3meXWthVkNWU8"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setMenuOpen(false)}
-          >
-            <Send size={18} />
-            Telegram
-          </a>
-
-          <a
-            href="mailto:lartistevisuel@gmail.com"
-            onClick={() => setMenuOpen(false)}
-          >
-            <Mail size={18} />
-            Email
-          </a>
-        </div>
-
-        <div className={styles.footer}>
-          <span>Disponible pour vos projets</span>
-
-          <small>Réponse sous 24 h</small>
-
-          <div className={styles.separator}></div>
-
-          <p>© 2026 L'ARTISTE VISUEL</p>
+          <p>Disponible pour vos projets · Réponse sous 24 h</p>
         </div>
       </div>
     </>

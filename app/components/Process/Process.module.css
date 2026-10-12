@@ -1,0 +1,106 @@
+.steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(20px, 2.6vw, 40px);
+    margin-top: clamp(40px, 6vw, 80px);
+    list-style: none;
+}
+
+.step {
+    position: relative;
+    padding-top: 28px;
+    border-top: 2px solid var(--line);
+}
+
+/* La ligne se trace, puis le point apparaît */
+
+.step::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.1s var(--ease) calc(var(--d, 0ms) + 200ms);
+}
+
+.step:global(.in)::after {
+    transform: scaleX(1);
+}
+
+.step::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    z-index: 1;
+    background: var(--red);
+    transform: scale(0);
+    transition: transform .6s cubic-bezier(.3, 1.8, .5, 1) var(--d, 0ms);
+    animation: ping 2.4s ease-out infinite;
+}
+
+.step:global(.in)::before {
+    transform: none;
+}
+
+@keyframes ping {
+
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 45, 45, .55);
+    }
+
+    100% {
+        box-shadow: 0 0 0 16px rgba(255, 45, 45, 0);
+    }
+
+}
+
+.number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(56px, 6vw, 88px);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, .28);
+}
+
+.step h3 {
+    margin: 14px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+.step p {
+    color: var(--muted);
+}
+
+/* ========================= */
+/* MÉTHODE MOBILE */
+/* ========================= */
+
+@media (max-width:960px) {
+
+    .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 48px;
+    }
+
+}
+
+@media (max-width:520px) {
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+}

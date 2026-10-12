@@ -1,112 +1,144 @@
-.services {
-    min-height: 100vh;
-    padding: 120px 8%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.subtitle {
-    color: #D4AF37;
-    letter-spacing: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.services h2 {
-    text-align: center;
-    font-size: clamp(48px, 6vw, 90px);
-    color: white;
-    margin-bottom: 70px;
-}
-
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(14px, 1.8vw, 24px);
+    margin-top: clamp(40px, 6vw, 80px);
+}
+
+.spot {
+    height: 100%;
+}
+
+/* Lueur qui suit la souris à l'intérieur de la carte */
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(340px circle at calc(var(--mx, .5) * 100%) calc(var(--my, .5) * 100%),
+            rgba(255, 45, 45, .2),
+            transparent 65%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s;
+}
+
+.spot[data-hover] .card::after {
+    opacity: 1;
+}
+
+.card:active {
+    scale: .98;
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(212, 175, 55, .15);
-    border-radius: 24px;
-    padding: 40px;
-    transition: .35s;
+    position: relative;
+    height: 100%;
+    padding: clamp(24px, 2.6vw, 38px);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition:
+        border-color .4s,
+        transform .5s var(--ease),
+        background-color .4s;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .5s var(--ease);
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    border-color: #D4AF37;
-    box-shadow: 0 20px 60px rgba(212, 175, 55, .18);
+    border-color: var(--line-strong);
+    background: var(--surface-2);
+    transform: translateY(-6px);
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.cardTop {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: clamp(28px, 4vw, 56px);
 }
 
 .icon {
-    color: #D4AF37;
-    margin-bottom: 22px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    background: rgba(255, 45, 45, .12);
+    color: var(--red);
+    transition:
+        background-color .4s,
+        color .4s,
+        transform .6s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.card:hover .icon {
+    background: var(--red-deep);
+    color: #fff;
+    transform: rotate(-12deg) scale(1.12);
+}
+
+.number {
+    font-family: var(--font-display);
+    font-size: 44px;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, .22);
+    transition: -webkit-text-stroke-color .4s;
+}
+
+.card:hover .number {
+    -webkit-text-stroke-color: var(--gold);
 }
 
 .card h3 {
-    font-size: 28px;
-    color: #fff;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(26px, 2.4vw, 32px);
+    line-height: 1.1;
+    letter-spacing: .02em;
+    text-transform: uppercase;
 }
 
 .card p {
-    color: #cfcfcf;
-    line-height: 1.7;
+    color: var(--muted);
 }
 
 /* ========================= */
 /* SERVICES MOBILE */
 /* ========================= */
 
-@media (max-width:768px) {
+@media (max-width:960px) {
 
-    .services {
-        min-height: auto;
-        padding: 90px 24px;
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .subtitle {
-        font-size: 12px;
-        letter-spacing: 3px;
-    }
+}
 
-    .services h2 {
-        font-size: clamp(34px, 10vw, 52px);
-        margin-bottom: 45px;
-    }
+@media (max-width:600px) {
 
     .grid {
         grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .card {
-        padding: 28px;
-        border-radius: 20px;
-    }
-
-    .icon {
-        justify-content: center;
-        margin-bottom: 18px;
-    }
-
-    .card h3 {
-        text-align: center;
-        font-size: 24px;
-    }
-
-    .card p {
-        text-align: center;
-        font-size: 16px;
-        line-height: 1.7;
     }
 
 }

@@ -1,57 +1,68 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Layers, MessagesSquare, Target } from "lucide-react";
+import Reveal from "../Reveal";
+import AnimatedTitle from "../motion/AnimatedTitle";
 import styles from "./About.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
+const pillars = [
+  {
+    icon: <Target size={26} strokeWidth={1.7} />,
+    title: "Sur mesure",
+    text: "Chaque création part de votre activité, de votre public et de vos objectifs.",
+  },
+  {
+    icon: <Layers size={26} strokeWidth={1.7} />,
+    title: "Du logo au site web",
+    text: "Un seul interlocuteur pour toute votre image : identité, imprimés, réseaux sociaux et web.",
+  },
+  {
+    icon: <MessagesSquare size={26} strokeWidth={1.7} />,
+    title: "Réactif",
+    text: "Une réponse sous 24 h et des échanges simples tout au long du projet.",
+  },
+];
 
 export default function About() {
-    const sectionRef = useRef<HTMLElement>(null);
-    useEffect(() => {
-  if (!sectionRef.current) return;
+  return (
+    <section id="about" className={`section ${styles.about}`}>
+      <div className="container">
+        <div className={styles.top}>
+          <div>
+            <Reveal variant="left">
+              <span className="eyebrow">
+                <b>01</b> À propos
+              </span>
+            </Reveal>
 
-  gsap.fromTo(
-    sectionRef.current,
-    {
-      opacity: 0,
-      y: 80,
-    },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 75%",
-        toggleActions: "play none none reverse",
-      },
-    }
-  );
-}, []);
-    return (
-        <section id="about" className={styles.about} ref={sectionRef}>
+            <AnimatedTitle
+              className="section-title"
+              segments={["Je transforme les idées en", { accent: "identités visuelles." }]}
+            />
+          </div>
 
-            <span>À PROPOS</span>
-
-            <h2>
-                Je transforme les idées
-                en identités visuelles.
-            </h2>
-
-            <p>
-                Je conçois des logos, des affiches,
-                des flyers, des identités visuelles
-                et des expériences graphiques
-                modernes pour les entreprises
-                et les créateurs.
+          <Reveal delay={260} className={styles.intro}>
+            <p className="lead">
+              Je conçois des logos, des affiches, des flyers, des identités
+              visuelles et des expériences graphiques modernes pour les
+              entreprises et les créateurs.
             </p>
-            <div className={styles.scroll}>
-                ↓
-            </div>
 
-        </section>
-    );
+            <p className="lead">
+              Mon objectif&nbsp;: que votre marque soit reconnue au premier coup
+              d&apos;œil, sur une vitrine comme sur un écran.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className={styles.pillars}>
+          {pillars.map((pillar, index) => (
+            <Reveal key={pillar.title} delay={index * 130} className={styles.pillar}>
+              <div className={styles.icon}>{pillar.icon}</div>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.text}</p>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

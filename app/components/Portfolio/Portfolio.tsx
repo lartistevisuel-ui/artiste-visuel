@@ -1,108 +1,75 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { projects } from "../../portfolio/projects";
+import Reveal from "../Reveal";
+import AnimatedTitle from "../motion/AnimatedTitle";
+import Fx from "../motion/Fx";
 import styles from "./Portfolio.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const projects = [
-    {
-        title: "My Food",
-        image: "/portfolio/projet1.webp",
-        link: "/portfolio/my-food",
-    },
-    {
-        title: "Number one",
-        image: "/portfolio/projet2.webp",
-        link: "/portfolio/number-one",
-    },
-    {
-        title: "Luxury Logo",
-        image: "/portfolio/projet3.webp",
-        link: "/portfolio/luxury-logo",
-    },
-    {
-        title: "Menu Premium",
-        image: "/portfolio/projet4.webp",
-        link: "/portfolio/menu-premium",
-    },
-];
-
 export default function Portfolio() {
-    const sectionRef = useRef<HTMLElement>(null);
-    useEffect(() => {
-        if (!sectionRef.current) return;
+  return (
+    <section id="portfolio" className={`section ${styles.portfolio}`}>
+      <div className="container">
+        <div className={styles.head}>
+          <div>
+            <Reveal variant="left">
+              <span className="eyebrow">
+                <b>02</b> Portfolio
+              </span>
+            </Reveal>
 
-        gsap.fromTo(
-            sectionRef.current.querySelectorAll(`.${styles.card}`),
-            {
-                opacity: 0,
-                y: 80,
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top 70%",
-                    toggleActions: "play none none reverse",
-                },
-            }
-        );
-    }, []);
-    return (
-        <section id="portfolio" className={styles.portfolio} ref={sectionRef}>
-            <span className={styles.subtitle}>PORTFOLIO</span>
+            <AnimatedTitle
+              className="section-title"
+              segments={["Mes dernières", { accent: "créations" }]}
+            />
+          </div>
 
-            <h2>Mes dernières créations</h2>
+          <Reveal delay={240}>
+            <p className="lead">
+              Une sélection de projets de branding, de logos et de supports
+              imprimés.
+            </p>
+          </Reveal>
+        </div>
 
-            <div className={styles.grid}>
-                {projects.map((project, index) => (
-                    <a
-                        key={index}
-                        className={styles.card}
-                        href={project.link}
-                        onMouseMove={(e) => {
-                            const card = e.currentTarget;
+        <div className={styles.grid}>
+          {projects.map((project, index) => (
+            <Reveal key={project.slug} delay={(index % 2) * 140} variant="scale">
+              <Fx scroll="through" pointer className={styles.scene}>
+                <Link
+                  href={`/portfolio/${project.slug}`}
+                  className={styles.card}
+                  data-cursor="Voir"
+                >
+                  <span className={styles.glare} />
 
-                            const rect = card.getBoundingClientRect();
+                  <div className={styles.media}>
+                  <Image
+                    src={project.thumb}
+                    alt={`Projet ${project.title}`}
+                    sizes="(max-width: 768px) 92vw, 600px"
+                  />
+                </div>
 
-                            const x = e.clientX - rect.left;
-                            const y = e.clientY - rect.top;
+                <div className={styles.info}>
+                  <span className={styles.number}>0{index + 1}</span>
 
-                            const rotateY = ((x / rect.width) - 0.5) * 14;
-                            const rotateX = ((y / rect.height) - 0.5) * -14;
+                  <div className={styles.text}>
+                    <h3>{project.title}</h3>
+                    <p>{project.tags.join(" · ")}</p>
+                  </div>
 
-                            card.style.transform = `
-                perspective(1000px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-                scale(1.03)
-              `;
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.transform =
-                                "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
-                        }}
-                    >
-                        <img src={project.image} alt={project.title} />
-
-                        <div className={styles.overlay}>
-                            <h3>{project.title}</h3>
-
-                            <div className={styles.viewProject}>
-                                <span>Voir le projet</span>
-                                <span>→</span>
-                            </div>
-                        </div>
-                    </a>
-                ))}
-            </div>
-        </section>
-    );
+                  <span className={styles.arrow}>
+                    <ArrowUpRight size={22} />
+                  </span>
+                </div>
+                </Link>
+              </Fx>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

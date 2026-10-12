@@ -1,0 +1,103 @@
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--bg);
+}
+
+/* Quadrillage discret, estompé vers les bords */
+
+.grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 75%);
+}
+
+/* Halos de couleur */
+
+.blob {
+    position: absolute;
+    width: 60vmax;
+    height: 60vmax;
+    border-radius: 50%;
+    filter: blur(110px);
+    will-change: transform;
+}
+
+.red {
+    top: -28vmax;
+    right: -20vmax;
+    background: radial-gradient(circle, rgba(255, 45, 45, .34), transparent 65%);
+    animation: driftA 26s ease-in-out infinite alternate;
+}
+
+.gold {
+    bottom: -34vmax;
+    left: -24vmax;
+    background: radial-gradient(circle, rgba(245, 184, 46, .18), transparent 65%);
+    animation: driftB 32s ease-in-out infinite alternate;
+}
+
+@keyframes driftA {
+
+    to {
+        transform: translate(-14vmax, 12vmax) scale(1.15);
+    }
+
+}
+
+@keyframes driftB {
+
+    to {
+        transform: translate(16vmax, -10vmax) scale(1.1);
+    }
+
+}
+
+/* Étincelles */
+
+.embers {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Lueur qui suit le curseur (variables posées par Cursor) */
+
+.spotlight {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(520px circle at var(--cx, 50%) var(--cy, -30%),
+            rgba(255, 255, 255, .055),
+            transparent 60%);
+}
+
+/* Grain */
+
+.grain {
+    position: absolute;
+    inset: 0;
+    opacity: .09;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (max-width:768px) {
+
+    .blob {
+        filter: blur(70px);
+    }
+
+    .grid {
+        background-size: 48px 48px;
+    }
+
+}

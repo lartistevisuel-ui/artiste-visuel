@@ -1,0 +1,133 @@
+.footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--line);
+    background: rgba(7, 7, 7, .82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 4vw, 64px);
+    padding-block: clamp(48px, 6vw, 80px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    width: 84px;
+    height: 84px;
+}
+
+.name {
+    font-family: var(--font-display);
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.name em {
+    font-style: normal;
+    color: var(--red);
+}
+
+.tagline {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+    font-size: 15px;
+}
+
+.column h2 {
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--red);
+}
+
+.column a,
+.column span {
+    color: var(--muted);
+    word-break: break-word;
+    transition: color .3s;
+}
+
+.column a:hover {
+    color: var(--text);
+}
+
+/* Grande signature : elle monte à mesure qu'on arrive en bas de page */
+
+.wordmark {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+}
+
+.wordmark p {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 14.6vw, 260px);
+    line-height: .92;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, .22);
+    transform: translateY(max(0%, calc(70% - var(--p, .5) * 900%)));
+    will-change: transform;
+}
+
+.wordmark em {
+    font-style: normal;
+    -webkit-text-stroke-color: var(--red);
+}
+
+.bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 22px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.bottom a:hover {
+    color: var(--text);
+}
+
+@media (max-width:900px) {
+
+    .inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .brand {
+        grid-column: 1 / -1;
+    }
+
+}
+
+@media (max-width:480px) {
+
+    .inner {
+        grid-template-columns: 1fr;
+    }
+
+}

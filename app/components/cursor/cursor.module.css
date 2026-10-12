@@ -1,21 +1,61 @@
-.cursor{
-    position:fixed;
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s;
+}
 
-    width:22px;
-    height:22px;
+.visible {
+    opacity: 1;
+}
 
-    border:2px solid #D4AF37;
-    border-radius:50%;
-
-    pointer-events:none;
-
-    transform:translate(-50%,-50%);
-
+.cursor span {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--red);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
     transition:
-        width .25s,
-        height .25s,
-        border .25s,
-        background .25s;
+        width .35s var(--ease),
+        height .35s var(--ease),
+        transform .3s var(--ease),
+        background-color .3s,
+        border-color .3s;
+}
 
-    z-index:999999;
+.cursor i {
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0;
+    transform: scale(.4);
+    transition:
+        opacity .25s,
+        transform .35s var(--ease);
+}
+
+.label span {
+    width: 92px;
+    height: 92px;
+    background: var(--red-deep);
+    border-color: var(--red-deep);
+}
+
+.label i {
+    opacity: 1;
+    transform: none;
+}
+
+.active span {
+    transform: translate(-50%, -50%) scale(1.7);
+    background: rgba(255, 45, 45, .14);
+    border-color: var(--gold);
 }

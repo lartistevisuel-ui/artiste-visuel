@@ -1,0 +1,71 @@
+.intro {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    background: #000;
+    pointer-events: none;
+    animation: lift .7s cubic-bezier(.7, 0, .2, 1) .95s forwards;
+}
+
+.logo {
+    width: 180px;
+    height: 180px;
+    animation: pop .7s cubic-bezier(.2, .9, .3, 1.2) both;
+}
+
+.bar {
+    width: 160px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    transform-origin: left;
+    animation: fill .85s ease-out both;
+}
+
+@keyframes pop {
+
+    from {
+        opacity: 0;
+        transform: scale(.7) rotate(-8deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+
+}
+
+@keyframes fill {
+
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+
+}
+
+@keyframes lift {
+
+    to {
+        transform: translateY(-100%);
+        visibility: hidden;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .intro {
+        display: none;
+    }
+
+}
