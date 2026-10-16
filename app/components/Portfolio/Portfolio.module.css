@@ -173,3 +173,17 @@
     }
 
 }
+
+/* Nombre impair de projets : le dernier prend toute la largeur */
+
+@media (min-width:769px) {
+
+    .grid > :last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+
+    .grid > :last-child:nth-child(odd) .media {
+        aspect-ratio: 21 / 9;
+    }
+
+}

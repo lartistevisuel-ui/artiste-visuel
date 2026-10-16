@@ -3,7 +3,6 @@ import type { StaticImageData } from "next/image";
 import thumbMyFood from "@/public/portfolio/projet1.webp";
 import thumbNumberOne from "@/public/portfolio/projet2.webp";
 import thumbLuxuryLogo from "@/public/portfolio/projet3.webp";
-import thumbMenuPremium from "@/public/portfolio/projet4.webp";
 
 import myFoodHero from "@/public/images/my-food/hero.webp";
 import myFood1 from "@/public/images/my-food/image1.webp";
@@ -22,11 +21,6 @@ import luxury2 from "@/public/images/luxury-logo/logo2.webp";
 import luxury3 from "@/public/images/luxury-logo/logo3.webp";
 import luxury4 from "@/public/images/luxury-logo/logo4.webp";
 
-import menuHero from "@/public/images/menu-premium/hero.webp";
-import menu1 from "@/public/images/menu-premium/menu1.webp";
-import menu2 from "@/public/images/menu-premium/menu2.webp";
-import menu3 from "@/public/images/menu-premium/menu3.webp";
-import menu4 from "@/public/images/menu-premium/menu4.webp";
 
 export type Project = {
   slug: string;
@@ -97,25 +91,6 @@ export const projects: Project[] = [
     thumb: thumbLuxuryLogo,
     hero: luxuryHero,
     gallery: [luxury2, luxury3, luxury4],
-  },
-  {
-    slug: "menu-premium",
-    title: "Menu Premium",
-    tags: ["Design de menu", "Identité visuelle", "Impression"],
-    headline: "Un menu pensé pour séduire avant même la première commande.",
-    description:
-      "Menu Premium est un projet de design graphique destiné à valoriser l'identité d'un restaurant. Chaque page est conçue pour mettre en avant les produits, améliorer l'expérience client et renforcer l'image de marque grâce à une mise en page moderne et élégante.",
-    services: [
-      "Conception du menu",
-      "Design graphique",
-      "Mise en valeur des produits",
-      "Préparation pour l'impression",
-      "Version numérique",
-      "Mockups",
-    ],
-    thumb: thumbMenuPremium,
-    hero: menuHero,
-    gallery: [menu1, menu2, menu3, menu4],
   },
 ];
 
